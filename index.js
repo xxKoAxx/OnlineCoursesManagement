@@ -2,6 +2,7 @@ const path = require('path')
 const fs = require('fs')
 const http = require('http')
 
+// create server instance
 let myServer = http.createServer((req, res) => {
     // file path link to the requested file
     let filePath = path.join(__dirname, 
