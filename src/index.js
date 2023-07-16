@@ -72,6 +72,7 @@ const handlebars = require('express-handlebars')    // used to create layout for
 const path = require('path');
 const app = express()
 
+// set static directory for file search
 app.use(express.static(path.join(__dirname, 'public')))
 
 // using morgan for log display 
