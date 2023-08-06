@@ -83,8 +83,12 @@ app.engine('hbs', handlebars.engine({extname: '.hbs'}))
 app.set('view engine', 'hbs')
 app.set('views', path.join(__dirname, 'resources', 'views'))
 
-// respond with "hello world" when a GET request is made to the homepage
 app.get('/', (req, res) => {
     res.render('home')
-  })
+})
+
+app.get('/search', (req, res) => {
+    res.render('search')
+})
+
 app.listen(5000, ()=>console.log('5000'))
