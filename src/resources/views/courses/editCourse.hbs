@@ -1,0 +1,33 @@
+<div class="mt-4 create-new-course">
+    <h3>Course Update</h3>
+    {{!-- method: method when submit form --}}
+    {{!-- action: the url path for action when submiting --}}
+    <form method="POST" action="/courses/{{course._id}}?_method=PUT">  
+        <div class="mb-3">
+            <label for="name">Course name</label>
+            <input class="form-control" value="{{course.name}}" id="name" name="name">
+            <div id="nameHelp" class="form-text">Full name of the course</div>
+        </div>
+        <div class="mb-3">
+            <label for="description">Course description</label>
+            <textarea class="form-control" id="description" name="description">{{course.description}}</textarea>
+            <div id="descriptionHelp" class="form-text">Describe about the course.</div>
+        </div>
+        <div class="mb-3">
+            <label for="level">Course level</label>
+            <input class="form-control" value="{{course.level}}" id="level" name="level">
+            <div id="levelHelp" class="form-text">The level of the course</div>
+        </div>
+        <div class="mb-3">
+            <label for="image">Course image</label>
+            <input class="form-control" value="{{course.image}}" id="image" name="image">
+            <div id="imageHelp" class="form-text">The image of the course</div>
+        </div>
+        <div class="mb-3">
+            <label for="youtubeIntroId">Course Intro Video</label>
+            <input class="form-control" value="{{course.youtubeIntroId}}" id="youtubeIntroId" name="youtubeIntroId">
+            <div id="youtubeIntroIdHelp" class="form-text">The id of the youtube video</div>
+        </div>
+        <button type="submit" class="btn btn-primary">Update Course</button>
+    </form>
+</div>

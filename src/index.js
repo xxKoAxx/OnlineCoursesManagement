@@ -1,5 +1,5 @@
 /*************************************************************************************/
-    // CREATE SERVER WITH ONLY HTTP MODULE
+// CREATE SERVER WITH ONLY HTTP MODULE
 // const path = require('path')
 // const fs = require('fs')
 // const http = require('http')
@@ -7,8 +7,8 @@
 // // create server instance
 // let myServer = http.createServer((req, res) => {
 //     // file path link to the requested file
-//     let filePath = path.join(__dirname, 
-//         "public", 
+//     let filePath = path.join(__dirname,
+//         "public",
 //         req.url == '/' ? "index.html" : req.url
 //     );
 //     // console.log(filePath)
@@ -62,33 +62,51 @@
 // const PORT = process.env.PORT || 5000;  // let port be the environment port or 5000
 // myServer.listen(PORT, ()=> console.log(`sever is running on port: ${PORT}`))
 
-
 /*************************************************************************************/
-    // CREATE SERVER WITH EXPRESS
-const express = require('express')      // help to create server with http methods easier
-const morgan = require('morgan')        // used to show request log whenever a request appear
-const handlebars = require('express-handlebars')    // used to create layout for web
+// CREATE SERVER WITH EXPRESS
+const express = require('express'); // help to create server with http methods easier
+const morgan = require('morgan'); // used to show request log whenever a request appear
 // import {engine} from handlebars
+const handlebars = require('express-handlebars'); // used to create layout for web
 const path = require('path');
-const app = express()
+const exp = require('constants');
+// method override is middleware allow overriding GET and POST into other method when request
+var methodOverride = require('method-override')
+
+const route = require('./routes/routeControl');
+const db = require('./config/db/index')
+
+const app = express();
+db.connect()
+
+// override with POST having ?_method=DELETE
+app.use(methodOverride('_method'))
 
 // set static directory for file search
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, 'public')));
 
-// using morgan for log display 
-app.use(morgan('combined')) 
+// using morgan for log display
+app.use(morgan('combined'));
 
 // Template engine usage
-app.engine('hbs', handlebars.engine({extname: '.hbs'}))
-app.set('view engine', 'hbs')
-app.set('views', path.join(__dirname, 'resources', 'views'))
+app.engine('hbs', handlebars.engine({ 
+    extname: '.hbs', 
+    helpers: {
+        sum: (a,b) => a+b, 
+    }
+}));
+app.set('view engine', 'hbs');
+app.set('views', path.join(__dirname, 'resources', 'views'));
 
-app.get('/', (req, res) => {
-    res.render('home')
-})
+// using middleware to convert input into object
+app.use(
+    express.urlencoded({
+        extended: true,
+    }),
+);
+app.use(express.json());
 
-app.get('/search', (req, res) => {
-    res.render('search')
-})
+// route controll initiate
+route(app);
 
-app.listen(5000, ()=>console.log('5000'))
+app.listen(5000, () => console.log('Listening at port 5000'));

@@ -1,1 +1,22 @@
-<h1>HOME PAGE</h1>
+<div class="mt-4 courses-view">
+    <div class="row">
+            
+        {{#each courses}}
+        <div class="col-sm-6 col-lg-4">
+            <div class="card card-course-item">
+                <a href="/courses/{{this.slug}}">
+                    <img src={{this.image}} class="card-img-top" alt="Card image cap">
+                </a>
+                <div class="card-body">
+                    <a href="/courses/{{this.slug}}">
+                        <h5 class="card-title" style="color: blueviolet;">{{this.name}}</h5>
+                        <p class="card-text" style="color: black;">{{this.description}}</p>
+                    </a>
+                    <a href="#" class="btn btn-primary">Buy Course</a>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+
+    </div>
+</div>

@@ -1,0 +1,17 @@
+<div class="mt-4 show-detail">
+    <div class="row">
+        <div class="col-lg-3 text-bg-secondary p-3 rounded-5" style="position: relative;">
+            <p style="text-align: center;">{{course.description}}</p>
+            <p style="text-align: center;">Level: {{course.level}}</p>
+            <button class="btn btn btn-outline-warning enrollBtn">
+                Enroll now
+            </button>
+        </div>
+
+        <div class="col-lg-9">
+            <h2>{{course.name}}</h2>
+            <iframe width="560" height="315" style="margin: 0 auto; display:block" src="https://www.youtube.com/embed/{{course.youtubeIntroId}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+
+    </div>
+</div>

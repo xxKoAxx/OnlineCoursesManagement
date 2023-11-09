@@ -6,18 +6,25 @@
   "scripts": {
     "start": "node src/index.js",
     "scss": "node-sass --watch src/resources/scss/ --output src/public/css/",
-    "dev": "nodemon --inspect src/index.js"
+    "dev": "nodemon --inspect src/index.js",
+    "beautify": "prettier src/**/*.{js,json,scss} --write --single-quote --trailing-comma all --tab-width 4"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express-handlebars": "^7.0.7",
+    "method-override": "^3.0.0",
+    "mongoose": "^7.6.4",
+    "mongoose-slug-generator": "^1.0.4",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
     "express": "^4.18.2",
+    "husky": "^8.0.3",
+    "lint-staged": "^14.0.0",
     "morgan": "^1.10.0",
     "node-sass": "^9.0.0",
-    "nodemon": "^2.0.22"
+    "nodemon": "^2.0.22",
+    "prettier": "^3.0.2"
   }
 }
