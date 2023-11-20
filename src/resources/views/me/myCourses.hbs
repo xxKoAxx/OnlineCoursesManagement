@@ -1,31 +1,173 @@
-<div class="mt-4 my-courses-view">
-    <h3>My Courses</h3>
+<form class="mt-4 my-courses-view" method="post" name="contain-all-form">
+    <div class="">
+        <h3>
+            My Courses
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-file-earmark-text" viewBox="0 0 16 16">
+                <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z"/>
+                <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5L9.5 0zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
+            </svg>
+        </h3>
+        
+    </div>
 
-    <table class="table table-striped table-bordered mt-4">
+    <div class="mt-4 d-flex align-items-center" >
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="checkbox-all">
+            <label class="form-check-label" for="checkbox-all">
+                Select all
+            </label>
+        </div>
+        <button type="submit" class="btn btn-primary btn-sm" disabled id="delete-selected-btn">Delete</button>
+        <a href="/me/trash/courses" class="">
+            Bin ({{deletedCount}})
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
+                <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
+            </svg>
+        </a>
+    </div>
+    
+    <table class="table table-striped table-bordered text-center mt-4">
         <thead>
             <tr>
+                <th scope="col"></th>
                 <th scope="col">#</th>
-                <th scope="col">Course name</th>
-                <th scope="col">Paticipated time</th>
-                <th scope="col">Level</th>
+                <th scope="col">
+                    Course name
+                    <a href="">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 8 8"><path fill="currentColor" d="M4 0L1 3h6L4 0zM1 5l3 3l3-3H1z"/></svg>
+                    </a>                
+                </th>
+                <th scope="col">
+                    Paticipated time
+                    <a href="">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 8 8"><path fill="currentColor" d="M4 0L1 3h6L4 0zM1 5l3 3l3-3H1z"/></svg>
+                    </a>
+                </th>
+                <th scope="col"> 
+                    Level
+                    <a href="">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 8 8"><path fill="currentColor" d="M4 0L1 3h6L4 0zM1 5l3 3l3-3H1z"/></svg>
+                    </a>                
+                </th>
                 <th scope="col">Action</th>
             </tr>
         </thead>
         <tbody>
             {{#each courses}}
             <tr>
+                <td>
+                    <input class="form-check-input checkbox" name="courseIds" type="checkbox" value="{{this._id}}">
+                </td>
                 <th scope="row">{{sum @index 1}}</th>
                 <td>{{this.name}}</td>
                 <td>{{this.createdAt}}</td>
                 <td>{{this.level}}</td>
                 <td>
                     <div class="btn-group" role="group" aria-label="Basic outlined example">
-                        <a href="#" class="btn btn-outline-primary">Delete</a>
+                        <a href="" data-id="{{this._id}}" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</a>
                         <a href="/courses/{{this._id}}/edit" class="btn btn-outline-primary">Change</a>
                     </div>
+                </td>
+            </tr>
+            {{else}}
+            <tr>
+                <td colspan="5" class="text-center">You have not post any courses. 
+                    <a href="/courses/createNewCourse">Please post a course</a>
                 </td>
             </tr>
             {{/each}}
         </tbody>
     </table>
+</form>
+
+
+{{!-- Delete Course Alert --}}
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="deleteModalLabel">Caution</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this course???
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Return</button>
+        <button type="button" id="btn-delete-course" class="btn btn-danger">Delete</button>
+      </div>
+    </div>
+  </div>
 </div>
+
+{{!-- hidden delete form --}}
+<form method="post" name="delete-course-form"></form>
+
+<script>
+    const deleteModal = document.getElementById('deleteModal')
+    let courseId
+    const btnDelete = document.getElementById('btn-delete-course')
+    const deleteForm = document.forms['delete-course-form']
+    const checkboxAll = document.getElementById('checkbox-all')
+    const itemCheckbox = document.getElementsByName('courseIds')
+    let checkedCount = 0;
+    const deleteSelectedBtn = document.getElementById('delete-selected-btn')
+    const containAllForm = document.forms['contain-all-form']
+
+    // when click delete btn in action column
+    if (deleteModal) {
+        deleteModal.addEventListener('show.bs.modal', event => {
+                // Button that triggered the modal
+            const button = event.relatedTarget
+                // Extract info from data-bs-* attributes
+            courseId = button.getAttribute('data-id')
+            console.log(courseId)
+        })
+    }
+    // when click delete btn in promt
+    if (btnDelete){
+        btnDelete.onclick = function(){
+            deleteForm.action = '/courses/' + courseId + '?_method=DELETE'
+            deleteForm.submit()
+        }
+    }
+
+    // deleteSelectedBtn clicked
+    if (deleteSelectedBtn){
+        deleteSelectedBtn.onclick = function(){
+            containAllForm.action = '/courses/delete-selected-courses?_method=DELETE'
+            containAllForm.submit()
+        }
+    }
+
+    // CHECKBOX-ALL CLICKED
+    checkboxAll.onchange = function(){
+        for (let checkbox of itemCheckbox){
+            checkbox.checked = checkboxAll.checked
+        }
+        if (this.checked) checkedCount = itemCheckbox.length
+        else checkedCount = 0
+        toggleDisabledBtn()
+    }
+
+    // itemCheckbox clicked
+    for (let checkbox of itemCheckbox){
+        checkbox.onchange = function(){
+            if (this.checked == true) checkedCount ++;
+            else if (this.checked == false) checkedCount --;
+
+            toggleDisabledBtn()
+            checkboxAll.checked = checkedCount == itemCheckbox.length
+        }
+    }
+    
+    // function toggle disabled btn (at least 1 checked checkbox)
+    function toggleDisabledBtn() {
+        if (checkedCount > 0) deleteSelectedBtn.removeAttribute("disabled")
+        else deleteSelectedBtn.setAttribute("disabled", "")
+    } 
+    
+
+</script>
