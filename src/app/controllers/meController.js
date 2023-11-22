@@ -5,7 +5,10 @@ const { mongooseArray_toObjects, mongooseObject_toObject} = require('../../utils
 class meController {
     //GET /me/myCourses
     showMyCourses(req, res, next) {
-        Promise.all([courseModel.countWithDeleted({deleted:true}), courseModel.find()])
+        Promise.all([
+            courseModel.countWithDeleted({deleted:true}), 
+            courseModel.find().sortByColumn(res)
+        ])
             .then(([count, courses]) => {
                 console.log(count)
                 courses = mongooseArray_toObjects(courses)
@@ -21,7 +24,7 @@ class meController {
     
     showTrashBin(req, res, next){
         courseModel
-            .findWithDeleted({deleted: true}) // will get all courses
+            .findWithDeleted({deleted: true}).sortByColumn(res)
             .then(courses => { 
                 courses = mongooseArray_toObjects(courses)
                 res.render('me/trashCourses', {courses: courses})

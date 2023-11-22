@@ -73,6 +73,8 @@ const exp = require('constants');
 // method override is middleware allow overriding GET and POST into other method when request
 var methodOverride = require('method-override')
 
+//custom middleware
+const sortMiddleware = require('./middlewares/sortMiddleware')
 const route = require('./routes/routeControl');
 const db = require('./config/db/index')
 
@@ -93,6 +95,26 @@ app.engine('hbs', handlebars.engine({
     extname: '.hbs', 
     helpers: {
         sum: (a,b) => a+b, 
+        sortIcon: (fieldName, sort) => {
+            const icons = {
+                default: '<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 8 8"><path fill="currentColor" d="M4 0L1 3h6L4 0zM1 5l3 3l3-3H1z"/></svg>',
+                desc: '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 8 8"><path fill="currentColor" d="M2 0v6H0l2.5 2L5 6H3V0H2zm2 0v1h4V0H4zm0 2v1h3V2H4zm0 2v1h2V4H4z"/></svg>',
+                asc: '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 8 8"><path fill="currentColor" d="M2 0v6H0l2.5 2L5 6H3V0H2zm2 0v1h2V0H4zm0 2v1h3V2H4zm0 2v1h4V4H4z"/></svg>'
+            }
+
+            const types = {
+                default: 'asc',
+                asc: 'desc',
+                desc: 'default'
+            }
+
+            let icon = sort.column === fieldName ? icons[sort.sortType] : icons['default'] 
+            let type = sort.column === fieldName ? types[sort.sortType] : types['default'] 
+
+            return `<a href="?sortType=${type}&column=${fieldName}">
+                        ${icon}
+                    </a>`
+        }
     }
 }));
 app.set('view engine', 'hbs');
@@ -105,6 +127,8 @@ app.use(
     }),
 );
 app.use(express.json());
+
+app.use(sortMiddleware)
 
 // route controll initiate
 route(app);

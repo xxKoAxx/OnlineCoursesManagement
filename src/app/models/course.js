@@ -16,6 +16,17 @@ const courseSchema = new mongoose.Schema({
 }, {
     versionKey: false,
     timestamps: true,
+// custom query helper
+    query: { 
+        sortByColumn(res) {
+            if (res.locals.sort.sortType != 'default' && res.locals.sort.column) {
+                return this.sort({
+                    [res.locals.sort.column]: res.locals.sort.sortType
+                })
+            }
+            return this
+        }
+    }
 })
 
 courseSchema.plugin(mongooseDelete, { 

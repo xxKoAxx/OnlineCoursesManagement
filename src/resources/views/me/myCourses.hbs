@@ -10,7 +10,7 @@
         
     </div>
 
-    <div class="mt-4 d-flex align-items-center" >
+    <div class="mt-4 d-flex align-items-center gap-3" >
         <div class="form-check">
             <input class="form-check-input" type="checkbox" value="" id="checkbox-all">
             <label class="form-check-label" for="checkbox-all">
@@ -26,7 +26,7 @@
             </svg>
         </a>
     </div>
-    
+
     <table class="table table-striped table-bordered text-center mt-4">
         <thead>
             <tr>
@@ -34,21 +34,15 @@
                 <th scope="col">#</th>
                 <th scope="col">
                     Course name
-                    <a href="">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 8 8"><path fill="currentColor" d="M4 0L1 3h6L4 0zM1 5l3 3l3-3H1z"/></svg>
-                    </a>                
+                    {{{sortIcon 'name' sort}}}
                 </th>
                 <th scope="col">
                     Paticipated time
-                    <a href="">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 8 8"><path fill="currentColor" d="M4 0L1 3h6L4 0zM1 5l3 3l3-3H1z"/></svg>
-                    </a>
+                    {{{sortIcon 'createdAt' sort}}}
                 </th>
                 <th scope="col"> 
                     Level
-                    <a href="">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 8 8"><path fill="currentColor" d="M4 0L1 3h6L4 0zM1 5l3 3l3-3H1z"/></svg>
-                    </a>                
+                    {{{sortIcon 'level' sort}}}
                 </th>
                 <th scope="col">Action</th>
             </tr>
@@ -72,7 +66,7 @@
             </tr>
             {{else}}
             <tr>
-                <td colspan="5" class="text-center">You have not post any courses. 
+                <td colspan="6" class="text-center">You have not post any courses. 
                     <a href="/courses/createNewCourse">Please post a course</a>
                 </td>
             </tr>
@@ -151,6 +145,8 @@
         else checkedCount = 0
         toggleDisabledBtn()
     }
+
+    
 
     // itemCheckbox clicked
     for (let checkbox of itemCheckbox){

@@ -16,6 +16,8 @@ router.get('/:slug', coursesController.showDetail);
 // [GET] /courses/:id/edit
 router.get('/:id/edit', coursesController.edit);
 
+// [DELETE] /courses/permanent-delete-selected-courses
+router.delete('/permanent-delete-selected-courses', coursesController.permanentDeleteSelectedCourses)
 
 // [DELETE] /courses/delete-selected-courses
 router.delete('/delete-selected-courses', coursesController.deleteSelectedCourses)
@@ -26,6 +28,8 @@ router.delete('/:id/force', coursesController.forceDestroy)
 // [DELETE] /courses/:id
 router.delete('/:id', coursesController.destroy)
 
+// [PATCH] /courses/restore-selected
+router.patch('/restore-selected-courses', coursesController.restoreSelectedCourses);
 
 // [PUT] /courses/:id/update
 router.put('/:id', coursesController.update);

@@ -86,6 +86,22 @@ class coursesController {
             .then(() => res.redirect('back'))
             .catch(err => console.log(err))
     }
+
+    // [PATCH] /courses/restore-selected-courses
+    restoreSelectedCourses(req, res, next){
+        courseModel
+            .restore({ _id: { $in: req.body.courseIds } })
+            .then(() => res.redirect('back'))
+            .catch(err => console.log(err))
+    }
+
+    // [DELETE] /courses/deleteSelectedCourses
+    permanentDeleteSelectedCourses(req, res, next){
+        courseModel
+            .deleteMany({ _id: { $in: req.body.courseIds } })
+            .then(() => res.redirect('back'))
+            .catch(err => console.log(err))
+    }
 }
 
     
